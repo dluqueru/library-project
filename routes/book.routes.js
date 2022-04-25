@@ -17,4 +17,17 @@ router.get("/books", (req, res, next) => {
     })
 });
 
+router.get("/books/:bookId", (req, res, next) => {
+    const id = req.params.bookId;
+
+    Book.findById(id)
+    .then((bookDetails) => {
+        res.render("books/book-details", {book: bookDetails})
+    })
+    .catch(err => {
+        console.log("error getting books from DB", err)
+        next(err);
+    })
+})
+
 module.exports = router;
