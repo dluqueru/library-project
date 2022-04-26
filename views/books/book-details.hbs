@@ -4,4 +4,10 @@
 <p>Summary: {{book.description}}</p>
 <p>Rating: {{book.rating}}/10</p>
 <hr>
+<a href="/books/{{book._id}}/edit">Edit</a>
+<hr>
+<form action="/books/{{_id}}/delete" method="POST">
+<button type="submit">Delete</button>
+</form>
+<hr>
 <a href="/books">Back</a>
