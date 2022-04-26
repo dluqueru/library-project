@@ -1,10 +1,12 @@
-const Book = require("../models/Book.model")
+const Book = require("../models/Book.model");
+const Author = require("../models/Author.model");
 
 const router = require("express").Router();
 
 
 router.get("/books", (req, res, next) => {
   Book.find()
+    .populate("author")
     .then((booksArr) => {
 
         console.log(booksArr);
@@ -18,8 +20,16 @@ router.get("/books", (req, res, next) => {
 });
 
 router.get("/books/create", (req, res, next) => {
-    res.render("books/books-create");
-})
+    Author.find()
+        .then((authorsArr) => {
+            res.render("books/books-create", {authors: authorsArr})
+        })
+        .catch(err => {
+            console.log("error getting books from DB", err)
+            next(err);
+        })
+
+});
 
 router.post("/books/create", (req, res, next) => {
     const newBook = {
@@ -88,7 +98,7 @@ router.post("/books/:bookId/edit", (req, res, next) => {
 router.post("/books/:bookId/delete", (req, res, next) => {
     const id = req.params.bookId;
 
-    Book.findByIdAndRemove(id)
+    Book.findByIdAndDelete(id)
         .then(response => {
             res.redirect("/books")
         })

@@ -26,3 +26,18 @@ form {
   display: block;
   margin: 1rem;
 }
+
+ul {
+  list-style: none;
+  display: flex;
+  text-align: center;
+  background-color: aquamarine;
+  border: 1px solid;
+  margin: auto;
+}
+
+li {
+  display: flex;
+  text-align: center;
+  margin: auto;
+}

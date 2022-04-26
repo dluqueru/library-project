@@ -1,0 +1,9 @@
+<h1>List of authors in our DB:</h1>
+
+{{#each authors}}
+    <section class="authors-summary">
+        <h2>{{this.name}}</h2>
+        <h4>by {{this.author.name}}</h4>
+        <a href="/authors/{{this.id}}">More details</a>
+    </section>
+{{/each}}
