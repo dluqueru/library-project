@@ -29,7 +29,7 @@ router.post("/register", (req, res, next) => {
         return User.create(userDetails)
     })
     .then(userFromDB => {
-        res.send("user was created!! :D")
+        res.redirect("/login")
     })
     .catch(error => next(error));
 })
@@ -52,7 +52,8 @@ router.post("/login", (req, res, next) => {
                 res.render("auth/login", {errorMessage: "email is not registered. Try other email."})
                 return;
             } else if (bcryptjs.compareSync(password, userFromDB.passwordHash)){
-                res.render("auth/user-profile", {user: userFromDB})
+                req.session.currentUser = userFromDB
+                res.redirect("/user-profile")
                 
             } else {
                 res.render("auth/login", {errorMessage: "incorrect credentials"})
@@ -62,7 +63,8 @@ router.post("/login", (req, res, next) => {
 })
 
 router.get("/user-profile", (req, res, next) => {
-    res.render("auth/user-profile")
+
+    res.render("auth/user-profile", {user: req.session.currentUser})
   })
   
 
