@@ -11,6 +11,11 @@ router.get("/register", (req, res, next) => {
 router.post("/register", (req, res, next) => {
     const {email, password} = req.body; // ES6 object destructuring // es lo mismo que const email = req.body.email & const password = req.body.password
 
+    if (!email || !password) {
+        res.render('auth/register', {errorMessage: "Please provide email and password"});
+        return;
+    }
+
     bcryptjs
     .genSalt(saltRounds)
     .then(salt => {
@@ -29,5 +34,36 @@ router.post("/register", (req, res, next) => {
     .catch(error => next(error));
 })
 
+router.get("/login", (req, res, next) => {
+  res.render("auth/login")
+})
+
+router.post("/login", (req, res, next) => {
+    const {email, password} = req.body;
+
+    if (!email || !password) {
+        res.render('auth/login', {errorMessage: "Please provide email and password"});
+        return;
+    }
+
+    User.findOne({email: email})
+        .then(userFromDB => {
+            if (!userFromDB){
+                res.render("auth/login", {errorMessage: "email is not registered. Try other email."})
+                return;
+            } else if (bcryptjs.compareSync(password, userFromDB.passwordHash)){
+                res.render("auth/user-profile", {user: userFromDB})
+                
+            } else {
+                res.render("auth/login", {errorMessage: "incorrect credentials"})
+            }
+        })
+        .catch(error => next(error));
+})
+
+router.get("/user-profile", (req, res, next) => {
+    res.render("auth/user-profile")
+  })
+  
 
 module.exports = router;
