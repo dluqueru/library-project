@@ -41,3 +41,8 @@ li {
   text-align: center;
   margin: auto;
 }
+
+.log {
+  border: 0;
+  margin: auto;
+}

@@ -27,8 +27,8 @@ const projectName = "ironlauncher";
 app.locals.appTitle = `${capitalized(projectName)} created with IronLauncher`;
 
 app.use((req, res, next) => {
-    res.locals.session = req.session; // allos access to session from layout
-    next()
+    res.locals.session = req.session; // allow access to session from layout
+    next();
 })
 
 // 👇 Start handling routes here

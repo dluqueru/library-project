@@ -8,7 +8,7 @@ router.get("/authors", (req, res, next) => {
 
         console.log(authorsArr);
 
-        res.render("/authors-list.hbs", {authors: authorsArr})
+        res.render("/authors/authors-list", {authors: authorsArr})
     })
     .catch(err => {
         console.log("error getting authors from DB", err)

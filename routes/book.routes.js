@@ -1,7 +1,9 @@
 const Book = require("../models/Book.model");
 const Author = require("../models/Author.model");
+const res = require("express/lib/response");
 
 const router = require("express").Router();
+const {isLoggedIn} = require("../middleware/route-guard")
 
 
 router.get("/books", (req, res, next) => {
@@ -19,7 +21,7 @@ router.get("/books", (req, res, next) => {
     })
 });
 
-router.get("/books/create", (req, res, next) => {
+router.get("/books/create", isLoggedIn, (req, res, next) => {
     Author.find()
         .then((authorsArr) => {
             res.render("books/books-create", {authors: authorsArr})
@@ -95,7 +97,7 @@ router.post("/books/:bookId/edit", (req, res, next) => {
     })
 })
 
-router.post("/books/:bookId/delete", (req, res, next) => {
+router.post("/books/:bookId/delete", isLoggedIn, (req, res, next) => {
     const id = req.params.bookId;
 
     Book.findByIdAndDelete(id)
