@@ -39,6 +39,11 @@
                </form>
             </li>
          </ul>
+            {{#if session.currentUser}}
+               logged in
+            {{else}}
+               not logged in
+            {{/if}}
       </nav>
       {{{body}}}
 
